@@ -6,32 +6,6 @@ We will use Cloudera Flow Manager (CFM) to build a NiFi dataflow in the interact
 
 `<cfm-ec2-public-dns>:8080/nifi/`
 
-### Upload Hadoop HDFS Location to NiFi
-
-SSH into EC2 instance running NiFi:
-
-~~~bash
-ssh -i /path/to/pem_file <os-name>@<public-dns-ipv4>
-~~~
-
-~~~bash
-# download hdfs core-site.xml
-mkdir -p /tmp/service/hdfs/
-cd /tmp/service/hdfs/
-wget https://raw.githubusercontent.com/james94/Autonomous-Car/master/documentation/assets/services/hadoop_hdfs/core-site.xml
-~~~
-
-Enter your CDH public host name in these field of core-site.xml:
-
-~~~xml
-  <property>
-    <name>fs.defaultFS</name>
-    <value>hdfs://{CDP Public DNS}:8020</value>
-  </property>
-~~~
-
-Save core-site.xml.
-
 ## Build NiFi Flow to Load Data into HDFS
 
 ### Add Input Port for CSV Data Ingest from MiNiFi Agent
@@ -58,7 +32,7 @@ Update the following processor properties:
 
 | Property  | Value  |
 |:---|---:|
-| `Hadoop Configuration Resources` | `/tmp/service/hdfs/core-site.xml` |
+| `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
 | `Directory`  | `/tmp/csdv/data/input/racetrack/image/`  |
 | `Recurse Subdirectories`  |  `True`  |
 
@@ -88,7 +62,7 @@ Add a **PutHDFS** processor onto canvas to store driving log data. Update proces
 
 | Property  | Value  |
 |:---|---:|
-| `Hadoop Configuration Resources` | `/tmp/service/hdfs/core-site.xml` |
+| `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
 | `Directory`  | `/tmp/csdv/data/input/racetrack/image/logitech`  |
 
 Connect the **AWS_MiNiFi_IMG** input port to **PutImgHDFS** processor:

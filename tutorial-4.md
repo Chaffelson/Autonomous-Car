@@ -64,7 +64,7 @@ Update the following processor properties:
 
 | Property  | Value  |
 |:---|---:|
-| `Hadoop Configuration Resources` | `/tmp/service/hdfs/core-site.xml` |
+| `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
 | `Directory`  | `/tmp/data/input/racetrack/image/`  |
 | `Recurse Subdirectories`  |  `false`  |
 
