@@ -63,16 +63,15 @@ We will build a MiNiFi ETL pipeline to ingest csv and image data.
 
 Add a **GetFile** processor onto canvas to get csv data:
 
-Update processor name to **GetCSVFile**.
-
 ![getfile-csv-data-p1](./documentation/assets/images/tutorial1/getfile-csv-data-p1.jpg)
 
 Double click on GetFile to configure. Scroll to **Properties**, add the properties in Table 1 to update GetFile's properties.
 
-**Table 1:** Update **GetCSVFile** Properties
+**Table 1:** Update **GetFile** Properties
 
 | Property  | Value  |
 |:---|---:|
+| `PROCESSOR NAME`  | `GetCSVFile`  |
 | `Input Directory`  | `/root/Autonomous-Car/application/data/lidar_scan`  |
 | `Keep Source File`  | `false`  |
 | `Recurse Subdirectories` | `false` |
@@ -85,7 +84,7 @@ Add URL NiFi is running on:
 
 | Settings  | Value  |
 |:---|---:|
-| `URL` | `http://<nifi-public-DNS>:8080/nifi/` |
+| `URL` | `http://edge2ai-1.dim.local:8080/nifi/` |
 
 Connect **GetCSVFile** to Remote Process Group, then add the NiFi destination input port ID you want to send the csv data:
 
@@ -93,7 +92,7 @@ Connect **GetCSVFile** to Remote Process Group, then add the NiFi destination in
 |:---|---:|
 | `Destination Input Port ID` | `<NiFi-input-port-ID>` |
 
-> Note: you can find the input port ID by clicking on your input port in the NiFi flow. Make sure you connect to the input port that sends csv data to HDFS.
+> Note: you can find the input port ID by clicking on your input port in the NiFi flow. Make sure you connect to the input port that sends **csv** data to HDFS.
 
 ![push-csv-to-nifi](./documentation/assets/images/tutorial1/push-csv-to-nifi.jpg)
 
@@ -101,8 +100,6 @@ Connect **GetCSVFile** to Remote Process Group, then add the NiFi destination in
 
 Add a separate inport port on NiFi UI and name it `AWS_AGENT_JPG` just like before leave it blank for now.
 Now change to your CEM UI and add a **GetFile** processor onto canvas to get image data:
-
-Update processor name to **GetImageFiles**.
 
 ![getfile-image-data-p2](./documentation/assets/images/tutorial1/getfile-image-data-p2.jpg)
 
@@ -112,16 +109,12 @@ Double click on GetFile to configure. Scroll to **Properties**, add the properti
 
 | Property  | Value  |
 |:---|---:|
+| `PROCESSOR NAME`  | `GetImageFiles`  |
 | `Input Directory`  | `/root/Autonomous-Car/application/data/cam_data`  |
 | `Keep Source File`  | `false`  |
+| `Recurse Subdirectories` | `false` |
 
 ### Push Image Data to Remote NiFi Instance
-
-**Table 3:** Add a **Remote Process Group** onto canvas to send image data to NiFi remote instance:
-
-| Settings  | Value  |
-|:---|---:|
-| `URL` | `http://<ec2-public-DNS>:8080/nifi/` | 
 
 **Table 4:** Connect **GetImageFiles** to Remote Process Group, then add the following configuration:
 
@@ -129,9 +122,23 @@ Double click on GetFile to configure. Scroll to **Properties**, add the properti
 |:---|---:|
 | `Destination Input Port ID` | `<NiFi-input-port-ID>` | 
 
-> Note: you can find the input port ID by clicking on your input port in the NiFi flow. Make sure you connect to the input port that sends image data to HDFS.
+> Note: you can find the input port ID by clicking on your input port in the NiFi flow. Make sure you connect to the input port that sends **image** data to HDFS.
 
 ![push-imgs-to-nifi](./documentation/assets/images/tutorial1/push-imgs-to-nifi.jpg)
+
+### Create IoT Bucket in NiFi Registry
+
+We need a container in our version control registry for the MiNiFi Flow to be published in
+
+Open your CEM UI at `<cloud-vm-public-dns:18080/nifi-registry>`
+
+Click the `Spanner` icon in the Top Right corner
+
+Click `New Bucket`
+
+Name your bucket `IoT`
+
+Click `Create`
 
 ### Publish Data Flow to MiNiFi Agent
 

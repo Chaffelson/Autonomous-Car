@@ -24,17 +24,21 @@ We will use the **input port** created on the previous section as an entry point
 
 ### Connect and Load CSV to HDFS
 
-Add a **PutHDFS** processor onto canvas to store driving log data. Update processor name to **PutCsvHDFS**.
+Add a **PutHDFS** processor onto canvas to store driving log data. 
 
-Update the following processor properties:
+In Settings, Update processor name to **PutCsvHDFS**.
 
-**Table 5:** update **PutCsvHDFS** Properties
+In Settings, Set AutoTerminate for **Success** and **Failure** relationships.
+
+Update the following processor Properties:
+
+**Table 5:** Update **PutCsvHDFS** Properties
 
 | Property  | Value  |
 |:---|---:|
 | `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
 | `Directory`  | `/tmp/csdv/data/input/racetrack/image/`  |
-| `Recurse Subdirectories`  |  `True`  |
+| `Conflict Resolution Strategy`  |  `Replace`  |
 
 Connect the **AWS_MiNiFi_CSV** input port to **PutCsvHDFS** processor:
 
@@ -56,7 +60,11 @@ Take note of **input port ID** under port details since we will need it for CEM 
 
 ### Connect and Load Images to HDFS
 
-Add a **PutHDFS** processor onto canvas to store driving log data. Update processor name to **PutImgHDFS**.
+Add a **PutHDFS** processor onto canvas to store driving log data.
+
+In Settings, Update processor name to **PutImgHDFS**.
+
+In Settings, Set AutoTerminate for **Success** and **Failure** relationships.
 
 **Table 6:** Update the following processor properties:
 
@@ -64,6 +72,7 @@ Add a **PutHDFS** processor onto canvas to store driving log data. Update proces
 |:---|---:|
 | `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
 | `Directory`  | `/tmp/csdv/data/input/racetrack/image/logitech`  |
+| `Conflict Resolution Strategy`  |  `Replace`  |
 
 Connect the **AWS_MiNiFi_IMG** input port to **PutImgHDFS** processor:
 
