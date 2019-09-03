@@ -5,7 +5,7 @@ We will use Cloudera Data Platform to have access car data in Hadoop - HDFS for 
 Download the source code to train the model to your local computer
 
 ~~~bash
-wget https://raw.githubusercontent.com/james94/Autonomous-Car/master/documentation/assets/src/hdfs-train.zip
+wget https://raw.githubusercontent.com/james94/Autonomous-Car/master/documentation/assets/src/hdfs-train.zip -O ~/hdfs-train.zip
 ~~~
 
 now open an instance of Cloudera Data Science Workbench
@@ -14,11 +14,15 @@ now open an instance of Cloudera Data Science Workbench
 
  `http://cdsw.<cdp-public-cloud-dns>.nip.io`
 
-Sign in to CDSW and select new project and name it CSDV
+Sign in to CDSW and go to Admin > Engines
+
+Add a new Engine Profile with 4vCPU and 20Gb Mem 
+
+Go to Projects, then Select new project and name it CSDV
 
 ![cdsw-ui](./documentation/assets/images/tutorial3/cdsw-ui.jpg)
 
-then select a local folder and upload the CSDV project you downloaded earlier:
+then select a local folder with option `Upload Tar or Gzip` and upload the CSDV project you downloaded earlier:
 
 ![new-project-cdsw](./documentation/assets/images/tutorial3/new-project-cdsw.jpg)
 
@@ -30,23 +34,23 @@ when selecting to open a new workbench ensure that you have an engine configurat
 
 ![openwb](./documentation/assets/images/tutorial3/engine.jpg)
 
-when you start the session click on the read me file and ensure the packages listed there are installed on your CDSW engine
+when you start the session open `hdfs-train` in the left panel and click on the read me file and ensure the packages listed there are installed on your CDSW engine, you can do this by selecting the lines between the ~~~ rows and using the `Run Lines` command from the menu
 
 ![rundep](./documentation/assets/images/tutorial3/run-dep.jpg)
+
+![deps](./documentation/assets/images/tutorial3/deps.jpg)
 
 now we can begin training our model, select the `hdfs-model.py` file on the CDSW file explorer, but before we can run the training script we must ensure that there is data flowing in to HDFS from our CEM cluster
 
 enter the following command on the workbench:
 
-`!hdfs dfs -ls /tmp/csdv/data/input/racetrack/image/logitech`
+`!hdfs dfs -ls /tmp/data/input/racetrack/image/logitech`
 
 the output should show a few files stored into HDFS. However, if not all of the files you intended to send over are stored into HDFS yet, you should wait because the more data we have the better the model will be.
 
 ![dataflowing](./documentation/assets/images/tutorial3/dataflowing.jpg)
 
 continue to wait until all of the files that were stored on the edge device have been moved to HDFS. Once all of the files have been moved and you have installed all of the dependencies you are ready to begin training
-
-![deps](./documentation/assets/images/tutorial3/deps.jpg)
 
 Now select the `hdfs-model.py` file and select `Run>Run All` your training should look like this
 

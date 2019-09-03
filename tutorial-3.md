@@ -37,7 +37,7 @@ Update the following processor Properties:
 | Property  | Value  |
 |:---|---:|
 | `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
-| `Directory`  | `/tmp/csdv/data/input/racetrack/image/`  |
+| `Directory`  | `/tmp/data/input/racetrack/image/`  |
 | `Conflict Resolution Strategy`  |  `Replace`  |
 
 Connect the **AWS_MiNiFi_CSV** input port to **PutCsvHDFS** processor:
@@ -71,7 +71,7 @@ In Settings, Set AutoTerminate for **Success** and **Failure** relationships.
 | Property  | Value  |
 |:---|---:|
 | `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
-| `Directory`  | `/tmp/csdv/data/input/racetrack/image/logitech`  |
+| `Directory`  | `/tmp/data/input/racetrack/image/logitech`  |
 | `Conflict Resolution Strategy`  |  `Replace`  |
 
 Connect the **AWS_MiNiFi_IMG** input port to **PutImgHDFS** processor:
