@@ -36,7 +36,8 @@ First, Start the MiNiFi agent from the Server Shell
 ~~~bash
 sudo su -
 systemctl start minifi
-git clone https://github.com/Chaffelson/Autonomous-Car.git
+wget -q https://whoville.s3.eu-west-2.amazonaws.com/v2/autocar.tar.gz -O /root/autocar.tar.gz
+tar -xzf ./autocar.tar.gz
 ~~~
 
 Open your CEM UI at `<cloud-vm-public-dns:10080/efm>`, if your `minifi.properties` configuration file is setup correctly you will find that your agent is sending heartbeats to the monitor events section of CEM UI
@@ -72,7 +73,7 @@ Double click on GetFile to configure. Scroll to **Properties**, add the properti
 | Property  | Value  |
 |:---|---:|
 | `PROCESSOR NAME`  | `GetCSVFile`  |
-| `Input Directory`  | `/root/Autonomous-Car/application/data/lidar_scan`  |
+| `Input Directory`  | `/root/data/lidar_scan`  |
 | `Keep Source File`  | `false`  |
 | `Recurse Subdirectories` | `false` |
 
@@ -110,7 +111,7 @@ Double click on GetFile to configure. Scroll to **Properties**, add the properti
 | Property  | Value  |
 |:---|---:|
 | `PROCESSOR NAME`  | `GetImageFiles`  |
-| `Input Directory`  | `/root/Autonomous-Car/application/data/cam_data`  |
+| `Input Directory`  | `/root/data/cam_data`  |
 | `Keep Source File`  | `false`  |
 | `Recurse Subdirectories` | `false` |
 
