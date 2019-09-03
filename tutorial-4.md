@@ -5,7 +5,7 @@ We will use Cloudera Data Platform to have access car data in Hadoop - HDFS for 
 Download the source code to train the model to your local computer
 
 ~~~bash
-wget https://raw.githubusercontent.com/james94/Autonomous-Car/master/documentation/assets/src/hdfs-train.zip -O ~/hdfs-train.zip
+wget https://raw.githubusercontent.com/Chaffelson/Autonomous-Car/master/documentation/assets/src/hdfs-train.zip -O ~/hdfs-train.zip
 ~~~
 
 now open an instance of Cloudera Data Science Workbench
@@ -30,7 +30,7 @@ Once the folder uploads to CDSW, open a new workbench:
 
 ![openwb](./documentation/assets/images/tutorial3/openwb.jpg)
 
-when selecting to open a new workbench ensure that you have an engine configuration with at least 20Gb of RAM or a GPU with 8GB of RAM and Python3
+when selecting to open a new workbench and select the new Engine Profile you created earlier
 
 ![openwb](./documentation/assets/images/tutorial3/engine.jpg)
 
@@ -60,35 +60,42 @@ for more details about how the training works check out this [blog](link)
 
 ### Back to the Edge
 
-Now that you have a model stored on HDFS we can move it back to the edge to complete the cycle. Navigate to NiFi UI and create a new `GetHDFS` processor and connect it to an **output** port
+Now that you have a model stored on HDFS we can move it back to the edge to complete the cycle. Navigate to NiFi UI and create a new `GetHDFS` processor:
+
+In Settings, Update processor name to **GetModel**.
 
 Update the following processor properties:
 
-**Table 7:** Update **GetHDFS** Properties
+**Table 7:** Update **GetModel** Properties
 
 | Property  | Value  |
 |:---|---:|
 | `Hadoop Configuration Resources` | `/etc/hadoop/conf.cloudera.hdfs/core-site.xml` |
-| `Directory`  | `/tmp/data/input/racetrack/image/`  |
+| `Directory`  | `/tmp/model`  |
 | `Recurse Subdirectories`  |  `false`  |
+
+Then connect the new Processor to a new Output Port called `FromHDFStoMiNiFi`
 
 your NiFi canvas should look like this
 
 ![gethdfs](./documentation/assets/images/tutorial3/gethdfs.jpg)
 
-Now navigate to CEM UI and lay out a new RPG
+Now in CEM, Create a new `PutFile` processor
 
-Add URL NiFi is running on:
+Double Click on the `GetModel` processor and set the following Properties
 
-**Table 8:** Add new RPG for NiFi's Output Port
+**Table 10:** Update **GetModel** Properties
 
-| Setting  | Value  |
+| Property  | Value  |
 |:---|---:|
-| `URL` | `http://<nifi-public-DNS>:8080/nifi/` |
+| `PROCESSOR NAME`  | `PutModel`  |
+| `Directory`  | `/tmp/fromHDFS/model/`  |
+| `Conflict Resolution Strategy`  | `Replace`  |
+| `Create Missing Directories`  |  `true`  |
 
-connect the RPG to a new `PutFile` processor and name it **GetModel**
+Also click the boxes for Success and Failure in the `AUTOMATICALLY TERMINATED RELATIONSHIPS` section, then `Apply`
 
-Connect the new RPG to the processor, then add the NiFi origin input port ID you want to send the csv data:
+Connect the NiFi RPG to the processor, then add the ID of the NiFi Output Port you created in the previous step:
 
 **Table 9:** Add **Output Port ID** for RPG connection
 
@@ -98,21 +105,9 @@ Connect the new RPG to the processor, then add the NiFi origin input port ID you
 
 once you are finished your flow should look like this
 
-![minifiedge](./documentation/assets/images/tutorial3/minifi-edge.jpg)
-
-now right click oin the `GetModel` processor and select **configure**
-
-**Table 10:** Update **GetModel** Properties
-
-| Property  | Value  |
-|:---|---:|
-| `Directory`  | `/tmp/fromHDFS/model/`  |
-| `Keep Source File`  | `false`  |
-| `Create Missing Directories`  |  `true`  |
+![minifiedge](./documentation/assets/images/tutorial3/minifi-edge.png)
 
 Next select **Action** and publish the MiNiFi flow. Finally, open the NiFi UI and start the processors to begin the flow of the model back into the edge device.
-
-![saved-model](./documentation/assets/images/tutorial3/saved-model.jpg)
 
 We can simply move the model into the location where ROS is expecting it to be and run CDSV with our new AI.
 
