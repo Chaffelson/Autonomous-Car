@@ -28,4 +28,4 @@ In this tutorial, you will build an Edge to AI application featuring CDF and CDS
 
 ## Tutorial Series
 
-[Autonomous Car Tutorial](https://github.com/james94/Autonomous-Car/blob/master/tutorial-1.md)
+[Autonomous Car Tutorial](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-1.md)

@@ -8,8 +8,6 @@ Autonomous Car is the Open Source version of Cloudera Self Driving Vehicle. This
 
 ## Learning Objectives
 
-- Install MiNiFi C++ Agent onto Jetson TX2
-- Understand the car sensor data from TX2
 - Build a ETL Data Pipeline for data ingest with CEM for MiNiFi
 - Connect MiNiFi Data Pipeline to NiFi Data Pipeline
 - Connect NiFi Pipeline to Hadoop HDFS
@@ -18,10 +16,17 @@ Autonomous Car is the Open Source version of Cloudera Self Driving Vehicle. This
 - Save to HDFS
 - Build a NiFi Pipeline to pull in HDFS model.h5
 - Send model from NiFi to MiNiFi
-- Deploy model using MiNiFi
 
 ## Outline
 
-- [Tutorial 1: Ingest Car Sensor Data on Edge](https://github.com/james94/Autonomous-Car/blob/master/tutorial-2.md)
-- [Tutorial 2: Collect Car Edge Data into Cloud](https://github.com/james94/Autonomous-Car/blob/master/tutorial-3.md)
-- [Tutorial 3: AI to Edge](https://github.com/james94/Autonomous-Car/blob/master/tutorial-4.md)
+- [Tutorial 1: Ingest Car Sensor Data on Edge](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-2.md)
+- [Tutorial 2: Collect Car Edge Data into Cloud](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-3.md)
+- [Tutorial 3: AI to Edge](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-4.md)
+
+
+## The following objectives require expensive hardware
+
+- Install MiNiFi C++ Agent onto Jetson TX2
+- Understand the car sensor data from TX2
+- (Current Steps Above)
+- Deploy model using MiNiFi
