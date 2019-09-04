@@ -8,20 +8,6 @@ We will use Cloudera Flow Manager (CFM) to build a NiFi dataflow in the interact
 
 ## Build NiFi Flow to Load Data into HDFS
 
-### Add Input Port for CSV Data Ingest from MiNiFi Agent
-
-We will use the **input port** created on the previous section as an entry point for our flow onto NiFi:
-
-![input-port-csv](./documentation/assets/images/tutorial2/input-port-csv.jpg)
-
->Note: Take note of **input port ID** under port details since we will need it for CEM UI to connect the MiNiFi processors to the NiFi RPG.
-
-### Save CSV Input Port ID for MiNiFi CEM Flow
-
-![input-port-csv-id](./documentation/assets/images/tutorial2/input-port-csv-id.jpg)
-
-> Note: if you haven't added inport port id for csv data in your minifi flow, take this id above to your minifi flow.
-
 ### Connect and Load CSV to HDFS
 
 Add a **PutHDFS** processor onto canvas to store driving log data. 
@@ -43,20 +29,6 @@ Update the following processor Properties:
 Connect the **AWS_MiNiFi_CSV** input port to **PutCsvHDFS** processor:
 
 ![connect-csv-to-hdfs](./documentation/assets/images/tutorial2/connect-csv-to-hdfs.jpg)
-
-### Add Input Port for Image Data Ingest from MiNiFi Agent
-
-If you haven't already Add an **input port** to extract image data from MiNiFi:
-
-![input-port-img](./documentation/assets/images/tutorial2/input-port-img.jpg)
-
-Take note of **input port ID** under port details since we will need it for CEM UI.
-
-### Save Image Input Port ID for MiNiFi CEM Flow
-
-![input-port-img-id](./documentation/assets/images/tutorial2/input-port-img-id.jpg)
-
-> Note: if you haven't added inport port id for image data in your minifi flow, take this id above to your minifi flow.
 
 ### Connect and Load Images to HDFS
 

@@ -60,9 +60,19 @@ wget -q https://whoville.s3.eu-west-2.amazonaws.com/v2/image_data.tar.gz -O /roo
 tar -xzf ./image_data.tar.gz
 ~~~
 
+### Open your UI Tabs
+
 Open your CEM UI at `<cloud-vm-public-dns:10080/efm>`, if your `minifi.properties` configuration file is setup correctly you will find that your agent is sending heartbeats to the monitor events section of CEM UI
 
 ![cem-ui-events](./documentation/assets/images/tutorial1/cem-ui-events.jpg)
+
+Open your NiFi UI at `<cloud-vm-public-dns:8080/nifi>`
+
+Open your NiFi-Registry UI at `<cloud-vm-public-dns:18080/nifi-registry>`
+
+Open your CDSW UI at `cdsw.<cloud public ip>.nip.io`
+
+### Set up First NiFi and MiNiFi Objects
 
 Now we know that our Agent can communicate with CEM, that is great news. In order to connect MiNiFi to NiFi we need to know where we are going so let's create a path for our data to slowly build a flow. 
 
