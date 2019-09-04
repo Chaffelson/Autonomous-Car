@@ -29,13 +29,33 @@ We will use Cloudera Edge Manager (CEM) to build a MiNiFi dataflow in the intera
 
 Deploy a single node CDH cluster from https://github.com/asdaraujo/edge2ai-workshop/tree/master/setup
 
-## Build Data Flow for MiNiFi via CEM UI
-
-First, Start the MiNiFi agent from the Server Shell
+This Setup process will output connection parameters for your cluster.
+For your convenience, export the IP and SSH Key path to variables
 
 ~~~bash
+export WIP=<CDH IP>
+export WSSH=<CDH SSH Key>
+~~~
+
+And open an SSH session into your CDH Node, and sudo to root
+
+~~~bash
+ssh -i $WSSH centos@$WIP
 sudo su -
+
+~~~
+
+## Build Data Flow for MiNiFi via CEM UI
+
+First, Start the MiNiFi agent from the Server Shell - it is preconfigured for you
+
+~~~bash
 systemctl start minifi
+~~~
+
+Then Download and prepare the demo data. The self-driving car is about USD2k to buy, so this is somewhat cheaper
+
+~~~bash
 wget -q https://whoville.s3.eu-west-2.amazonaws.com/v2/image_data.tar.gz -O /root/image_data.tar.gz
 tar -xzf ./image_data.tar.gz
 ~~~
@@ -44,11 +64,15 @@ Open your CEM UI at `<cloud-vm-public-dns:10080/efm>`, if your `minifi.propertie
 
 ![cem-ui-events](./documentation/assets/images/tutorial1/cem-ui-events.jpg)
 
-Now we know that our Agent can communicate with CEM, that is great news. In order to connect MiNiFi to NiFi we need to know where we are going so let's create a path for our data to slowly build a flow. Open NiFi UI on your CDF cluster and create a new input source named `AWS_MiNiFi_CSV` leave it alone for now, we will need the input id to set our connection from MiNiFi processor to NiFi Remote Process Group (RPG)
+Now we know that our Agent can communicate with CEM, that is great news. In order to connect MiNiFi to NiFi we need to know where we are going so let's create a path for our data to slowly build a flow. 
+
+Open NiFi UI on your CDF cluster at `<cloud-vm-public-dns:8080/nifi>` and create a new input source named `AWS_MiNiFi_CSV` leave it alone for now, we will need the input id to set our connection from MiNiFi processor to NiFi Remote Process Group (RPG)
 
 ![input-port-csv](./documentation/assets/images/tutorial2/input-port-csv.jpg)
 
-That is all we need to do on NiFi for now. Navigate to the Flow Designer on CEM UI, you can click on the class associated with MiNiFi agent you want to build the dataflow for, note that we named our agent `AWS_AGENT_001` and our class `AWS_AGENT`
+That is all we need to do on NiFi for now. 
+
+Navigate to the Flow Designer on CEM UI, you can click on the class associated with MiNiFi agent you want to build the dataflow for, note that we named our agent `AWS_AGENT_001` and our class `AWS_AGENT` but you might be named `iot-1`
 
 > Note: Later when MiNiFi C++ agent deployed on separate the Jetson TX2, the class called **"CSDV_agent"** will appear.
 
@@ -62,7 +86,7 @@ We will build a MiNiFi ETL pipeline to ingest csv and image data.
 
 ### Add a GetFile for CSV Data Ingest
 
-Add a **GetFile** processor onto canvas to get csv data:
+Add a **GetFile** processor onto canvas to get csv data, by dragging the Processor Icon to the canvas:
 
 ![getfile-csv-data-p1](./documentation/assets/images/tutorial1/getfile-csv-data-p1.jpg)
 
@@ -87,7 +111,7 @@ Add URL NiFi is running on:
 |:---|---:|
 | `URL` | `http://edge2ai-1.dim.local:8080/nifi/` |
 
-Connect **GetCSVFile** to Remote Process Group, then add the NiFi destination input port ID you want to send the csv data:
+Connect **GetCSVFile** to Remote Process Group by dragging the Arrow from GetCSVFile to the RPG, then add the NiFi destination input port ID you want to send the csv data:
 
 | Settings  | Value  |
 |:---|---:|
@@ -125,7 +149,7 @@ Double click on GetFile to configure. Scroll to **Properties**, add the properti
 
 > Note: you can find the input port ID by clicking on your input port in the NiFi flow. Make sure you connect to the input port that sends **image** data to HDFS.
 
-![push-imgs-to-nifi](./documentation/assets/images/tutorial1/push-imgs-to-nifi.jpg)
+![push-imgs-to-nifi](./documentation/assets/images/tutorial1/push-imgs-to-nifi.png)
 
 ### Create IoT Bucket in NiFi Registry
 
