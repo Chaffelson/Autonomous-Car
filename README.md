@@ -4,9 +4,9 @@
 
 Autonomous Car is an Open Source Self Driving Vehicle. This car is powered by 3 Cameras, LiDAR and Logitech Game Controller connected to the Jetson TX2 Board. ROS runs on the TX2 and controls the car's movement. Keras is used on the TX2 or on CDSW in the cloud for building, training and deploying a CNN model based on cloning driving behavior. Hadoop HDFS is used to store all the car data and save the trained CNN model. When the CNN model is deployed, ROS receives a constant speed of 15mph while streaming in center camera images and receiving a predicted steering angle for each image. Hence, the car drives autonomously on the custom track.
 
-![james_with_car.jpg](documentation/images/james_with_car.jpg)
+![james_with_car.jpg](documentation/assets/images/readme/james_with_car.jpg)
 
-![controller.jpg](documentation/images/controller.jpg)
+![controller.jpg](documentation/assets/images/readme/controller.jpg)
 
 In this tutorial, you will build an Edge to AI application featuring CDF and CDSW.
 
@@ -28,4 +28,4 @@ In this tutorial, you will build an Edge to AI application featuring CDF and CDS
 
 ## Tutorial Series
 
-[Autonomous Car Tutorial](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-1.md)
+[Autonomous Car Tutorial](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-0.md)

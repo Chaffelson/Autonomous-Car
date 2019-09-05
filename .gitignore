@@ -9,3 +9,10 @@ apache-maven/
 
 # Ignore zeppelin-0.8.0
 zeppelin-0.8.0/
+/application/
+/cdh/
+/datasheets/
+/documentation/get-started/
+/documentation/assets/data/
+/documentation/assets/services/
+/documentation/images/
