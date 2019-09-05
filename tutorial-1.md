@@ -188,3 +188,5 @@ Make this flow available to all agents associated with **iot-1** class, press pu
 Result of publish successful:
 
 ![published-success](./documentation/assets/images/tutorial1/published-success.png)
+
+Continue to [Tutorial 2: Collect Car Edge Data into Cloud](https://github.com/Chaffelson/Autonomous-Car/blob/master/tutorial-2.md)
